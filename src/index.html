@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self' https: http: data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; media-src https: http: blob:; connect-src https: http:;">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KoalaTV</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="splash" class="splash">
+  <img class="brand-mark" src="../assets/koala-logo.svg" alt="KoalaTV"><div class="splash-name">Koala<span>TV</span></div>
+  <div class="load-track"><i id="loadbar"></i></div><div id="loadtext">Preparando canales…</div>
+</div>
+<main id="app" class="app hidden">
+  <header class="topbar">
+    <div class="brand"><img class="brand-small" src="../assets/koala-logo.svg" alt=""><span>Koala<strong>TV</strong></span></div>
+    <div class="live-pill"><i></i> EN VIVO</div>
+    <div class="top-actions"><span id="clock"></span><button id="btnSources" class="ghost">＋ Listas</button><button id="btnFullscreen" class="ghost">⛶ Pantalla completa</button></div>
+  </header>
+  <section class="stage" id="stage">
+    <video id="video" autoplay playsinline></video>
+    <div id="buffer" class="buffer hidden"><div></div><span>Conectando con la señal…</span></div>
+    <div id="error" class="error hidden">Señal no disponible</div>
+    <div id="channelDigits" class="digits hidden"></div>
+    <div id="osd" class="osd">
+      <div class="osd-head"><span>INFORMACIÓN DEL CANAL</span><b>KOALA<span>TV</span></b></div>
+      <div class="osd-main"><div class="channel-number" id="channelNumber">100</div><div class="channel-meta"><h2 id="channelName">Cargando canal…</h2><div class="meta-line"><span id="channelPosition">CANAL 1</span><span>•</span><span id="channelResolution">HLS EN VIVO</span></div></div></div>
+      <div class="program"><div><small>AHORA</small><strong id="nowTitle">Información de programación no disponible</strong></div><div><small>A CONTINUACIÓN</small><strong id="nextTitle">Guía EPG</strong></div><time id="osdClock"></time></div>
+    </div>
+    <aside id="channelPanel" class="channel-panel hidden">
+      <div class="panel-head"><div><small>KOALATV</small><h3>Canales</h3></div><button id="closePanel">✕</button></div>
+      <input id="filter" placeholder="Buscar canal…" autocomplete="off">
+      <div id="channelList" class="channel-list"></div>
+      <div class="panel-foot"><span id="channelCount">0 canales</span><span>↑ ↓ navegar · ENTER ver</span></div>
+    </aside>
+    <div class="bottom-hint"><span>↑ / ↓ CAMBIAR CANAL</span><span>ENTER LISTA</span><span>F PANTALLA COMPLETA</span><span>ESC CERRAR</span></div>
+  </section>
+</main>
+<div id="sourcesModal" class="modal hidden">
+ <div class="modal-card"><div class="modal-title"><div><small>CONFIGURACIÓN IPTV</small><h2>Administrar listas</h2></div><button id="closeSources">✕</button></div>
+ <div class="add-row"><input id="playlistUrl" placeholder="https://servidor/lista.m3u8"><button id="addUrl">Agregar URL</button><button id="addFile" class="secondary">Abrir archivo</button></div>
+ <div id="sourceItems" class="source-items"></div><p class="note">Las listas se guardan localmente en este computador. Agrega únicamente listas que tengas autorización para utilizar.</p>
+ <button id="reload" class="reload">Recargar canales</button></div>
+</div>
+<script src="../node_modules/hls.js/dist/hls.min.js"></script><script src="renderer.js"></script>
+</body></html>

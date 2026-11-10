@@ -1,0 +1,36 @@
+{
+  "name": "koalatv-windows",
+  "version": "1.0.0",
+  "description": "KoalaTV - reproductor IPTV para Windows",
+  "main": "src/main.js",
+  "author": "KoalaTV",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "dependencies": {
+    "hls.js": "^1.5.17"
+  },
+  "devDependencies": {
+    "electron": "^32.2.7",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.koalatv.desktop",
+    "productName": "KoalaTV",
+    "asar": true,
+    "directories": { "output": "dist" },
+    "files": ["src/**/*", "assets/**/*", "package.json", "node_modules/**/*"],
+    "win": {
+      "target": ["nsis"],
+      "artifactName": "KoalaTV-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
