@@ -9,13 +9,16 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-windows:
-    name: Compilar KoalaTV APK Windows
+    name: Compilar KoalaTV Windows
     runs-on: windows-latest
 
     steps:
-      - name: Descargar codigo del repositorio
+      - name: Descargar codigo
         uses: actions/checkout@v4
 
       - name: Configurar Node.js
@@ -23,34 +26,30 @@ jobs:
         with:
           node-version: 20
 
-      - name: Verificar version de Node
+      - name: Verificar Node.js
         run: node --version
 
       - name: Instalar dependencias
         run: npm install
 
-      - name: Compilar instalador Windows
-        run: npm run dist
+      - name: Compilar instalador KoalaTV
+        run: npx electron-builder --win --publish never
 
       - name: Verificar instalador
         shell: pwsh
         run: |
-          if (!(Test-Path "dist")) {
-            throw "No se encontro la carpeta dist"
-          }
-
-          Get-ChildItem dist -Recurse
-
-          $installer = Get-ChildItem dist -Filter "*.exe"
+          $installer = Get-ChildItem "dist" -Filter "*.exe"
 
           if (!$installer) {
             throw "No se genero el instalador EXE"
           }
 
-      - name: Publicar instalador KoalaTV
+          Get-ChildItem dist -Recurse
+
+      - name: Publicar instalador como Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KoalaTV-Windows-Installer
+          name: KoalaTV-Windows
           path: dist/*.exe
           if-no-files-found: error
           retention-days: 30
